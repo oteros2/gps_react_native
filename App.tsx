@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from './src/screens/HomeScreen';
 import Map from './src/screens/Map';
 
+
 type RootStackParamList = {
   inicio: undefined;
   gps: undefined;  
@@ -20,3 +21,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+
