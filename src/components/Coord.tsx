@@ -1,5 +1,5 @@
 import Geolocation, { GeolocationResponse } from '@react-native-community/geolocation';
-import React, { useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { StyleSheet, View, Text, PermissionsAndroid, TouchableOpacity } from 'react-native';
 
 // Función para solicitar permisos de ubicación
@@ -29,7 +29,6 @@ const requestLocationPermission = async (): Promise<boolean> => {
 };
 
 const Coord: React.FC = () => {
-
   //estado para almacenar las coordenadas obtenidas
   const [location, setLocation] = useState<GeolocationResponse | null>(null);
 
@@ -52,15 +51,17 @@ const Coord: React.FC = () => {
     }
   };
 
+  //Obtiene las coordenadas cada 5 segundos
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      getLocation();
+    }, 5000);
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Obtener ubicacion</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => getLocation()}
-      >
-        <Text style={styles.buttonText}>Obtener coordenadas</Text>
-      </TouchableOpacity>
+      <Text style={styles.text}> Ubicación actual</Text>
       <Text style={styles.postion}>Latitud: {location?.coords.latitude ?? 'No disponible'}</Text>
       <Text style={styles.postion}>Longitud: {location?.coords.longitude ?? 'No disponible'}</Text>
     </View>
@@ -79,18 +80,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  button: {
-    backgroundColor: '#007BFF', 
-    borderRadius: 10,
-    alignItems: 'center',
-    width: 400,
-  },
-  buttonText: {
-    color: '#fff', 
-    fontSize: 40, 
-    fontWeight: 'bold', 
-  },
+  }
 });
 
 export default Coord;
