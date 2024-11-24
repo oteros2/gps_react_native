@@ -1,6 +1,6 @@
 import Geolocation, { GeolocationResponse } from '@react-native-community/geolocation';
 import React, { useState} from 'react';
-import { StyleSheet, View, Text, Button, PermissionsAndroid, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, PermissionsAndroid, TouchableOpacity } from 'react-native';
 
 // Función para solicitar permisos de ubicación
 const requestLocationPermission = async (): Promise<boolean> => {
@@ -28,7 +28,8 @@ const requestLocationPermission = async (): Promise<boolean> => {
   }
 };
 
-const Map: React.FC = () => {
+const Coord: React.FC = () => {
+
   //estado para almacenar las coordenadas obtenidas
   const [location, setLocation] = useState<GeolocationResponse | null>(null);
 
@@ -46,7 +47,7 @@ const Map: React.FC = () => {
           console.error('Error getting location:', error.code, error.message);
           setLocation(null);
         },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+        { enableHighAccuracy: false, timeout: 1500, maximumAge: 10000 }
       );
     }
   };
@@ -92,4 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map;
+export default Coord;
